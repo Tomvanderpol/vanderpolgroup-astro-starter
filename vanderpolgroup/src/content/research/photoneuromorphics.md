@@ -1,5 +1,5 @@
 ---
-title: Photoneuromorphics
+title: Photoneuromorphic Materials
 summary: Exploring light-responsive (organic) mixed ionic-electronic conductors
   for material level logics using light.
 order: 3
