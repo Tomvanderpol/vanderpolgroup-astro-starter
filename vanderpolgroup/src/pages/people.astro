@@ -1,7 +1,7 @@
 
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 const people = (await getCollection('people')).sort(
   (a, b) => a.data.order - b.data.order
@@ -22,46 +22,81 @@ const people = (await getCollection('people')).sort(
     <div class="container">
       {people.length ? (
         <div class="cards">
-          {await Promise.all(
-            people.map(async (p) => {
-              const { Content } = await render(p);
+          {people.map((person) => (
+            <a
+              class="card person-card"
+              href={`/people/${person.id}/`}
+            >
+              {person.data.image && (
+                <img
+                  src={person.data.image}
+                  alt={person.data.name}
+                  loading="lazy"
+                  class="person-image"
+                />
+              )}
 
-              return (
-                <article class="card">
-                  {p.data.image && (
-                    <img
-                      src={p.data.image}
-                      alt={p.data.name}
-                      loading="lazy"
-                      style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:16px"
-                    />
-                  )}
-
-                  <h2>{p.data.name}</h2>
-
-                  <p>
-                    <strong>{p.data.role}</strong>
-                  </p>
-
-                  <Content />
-
-                  {p.data.email && (
-                    <p>
-                      <a href={`mailto:${p.data.email}`}>
-                        {p.data.email}
-                      </a>
-                    </p>
-                  )}
-                </article>
-              );
-            })
-          )}
+              <div class="person-info">
+                <h2>{person.data.name}</h2>
+                <p class="role">{person.data.role}</p>
+                <span class="profile-link">
+                  View profile →
+                </span>
+              </div>
+            </a>
+          ))}
         </div>
       ) : (
         <p class="muted">
-          Team profiles are being prepared. Add members through Pages CMS.
+          Team profiles are being prepared.
+          Add members through Pages CMS.
         </p>
       )}
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .person-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .person-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .person-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .person-info h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.3rem;
+  }
+
+  .role {
+    margin: 0 0 1.2rem;
+    color: #64748b;
+  }
+
+  .profile-link {
+    margin-top: auto;
+    color: #0696a6;
+    font-weight: 600;
+  }
+
+  .person-card:hover .profile-link {
+    text-decoration: underline;
+  }
+</style>

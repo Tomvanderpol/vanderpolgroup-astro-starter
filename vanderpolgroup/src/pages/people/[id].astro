@@ -1,0 +1,118 @@
+
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const people = await getCollection('people');
+
+  return people.map((person) => ({
+    params: { id: person.id },
+    props: { person }
+  }));
+}
+
+const { person } = Astro.props;
+const { Content } = await render(person);
+---
+
+<BaseLayout title={person.data.name}>
+  <section class="pagehead">
+    <div class="container">
+      <h1>{person.data.name}</h1>
+      <p class="muted">{person.data.role}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container profile-layout">
+
+      {person.data.image && (
+        <div class="profile-photo">
+          <img
+            src={person.data.image}
+            alt={person.data.name}
+          />
+        </div>
+      )}
+
+      <div class="profile-content">
+        <div class="biography">
+          <Content />
+        </div>
+
+        {person.data.email && (
+          <div class="contact-info">
+            <h3>Email</h3>
+            <p>{person.data.email}</p>
+          </div>
+        )}
+
+        <a class="back-link" href="/people/">
+          ← Back to The Team
+        </a>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .profile-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+  }
+
+  .profile-content {
+    line-height: 1.7;
+  }
+
+  .biography {
+    margin-bottom: 2rem;
+  }
+
+  .contact-info {
+    margin-bottom: 2rem;
+  }
+
+  .contact-info h3 {
+    color: #0696a6;
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-info p {
+    margin-top: 0;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #0696a6;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 700px) {
+    .profile-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .profile-photo {
+      max-width: 300px;
+    }
+  }
+</style>
