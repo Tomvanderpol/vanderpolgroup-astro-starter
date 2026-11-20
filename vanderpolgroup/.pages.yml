@@ -1,0 +1,54 @@
+media:
+  input: public/images
+  output: /images
+content:
+  - name: research
+    label: Research themes
+    type: collection
+    path: src/content/research
+    view:
+      fields: [title, order]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: summary, label: Summary, type: text, required: true }
+      - { name: order, label: Display order, type: number, required: true }
+      - { name: body, label: Main text, type: rich-text }
+  - name: people
+    label: People
+    type: collection
+    path: src/content/people
+    view:
+      fields: [name, role, order]
+    fields:
+      - { name: name, label: Name, type: string, required: true }
+      - { name: role, label: Role, type: string, required: true }
+      - { name: email, label: Email, type: string }
+      - { name: image, label: Photo, type: image }
+      - { name: order, label: Display order, type: number }
+      - { name: body, label: Biography, type: rich-text }
+  - name: publications
+    label: Publications
+    type: collection
+    path: src/content/publications
+    view:
+      fields: [title, year, featured]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: authors, label: Authors, type: string, required: true }
+      - { name: journal, label: Journal, type: string }
+      - { name: year, label: Year, type: number, required: true }
+      - { name: doi, label: DOI (without https://doi.org/), type: string }
+      - { name: featured, label: Feature on homepage, type: boolean }
+      - { name: body, label: Notes, type: rich-text }
+  - name: news
+    label: News
+    type: collection
+    path: src/content/news
+    view:
+      fields: [title, date]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: summary, label: Summary, type: text }
+      - { name: image, label: Image, type: image }
+      - { name: body, label: Article, type: rich-text }

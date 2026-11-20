@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';import {getCollection} from 'astro:content';const pubs=(await getCollection('publications')).sort((a,b)=>b.data.year-a.data.year);
+---
+<BaseLayout title="Publications"><section class="pagehead"><div class="container"><div class="eyebrow">SCIENTIFIC OUTPUT</div><h1>Publications</h1><p class="muted">Research papers and scholarly contributions.</p></div></section><section class="section"><div class="container content">{pubs.length?pubs.map(p=><article class="item"><h3>{p.data.title}</h3><p>{p.data.authors}</p><p class="muted"><em>{p.data.journal}</em> ({p.data.year})</p>{p.data.doi&&<a href={`https://doi.org/${p.data.doi}`} target="_blank" rel="noopener noreferrer">View publication / DOI ↗</a>}</article>):<p class="muted">Publications will appear here once added through the CMS.</p>}</div></section></BaseLayout>

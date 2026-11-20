@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';import {getCollection} from 'astro:content';const items=(await getCollection('research')).sort((a,b)=>a.data.order-b.data.order);
+---
+<BaseLayout title="Research"><section class="pagehead"><div class="container"><div class="eyebrow">OUR SCIENCE</div><h1>Research</h1><p class="muted">Three connected directions in organic electronics and optoelectronic mixed conductors.</p></div></section><section class="section"><div class="container cards">{items.map(item=><a class="card" href={`/research/${item.id}/`}><h2>{item.data.title}</h2><p>{item.data.summary}</p><strong>Read more →</strong></a>)}</div></section></BaseLayout>

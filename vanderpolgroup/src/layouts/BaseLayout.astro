@@ -1,0 +1,7 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+const {title='van der Pol Group',description='Optoelectronic Mixed Conductors — research on organic mixed ionic–electronic conductors and organic electronics.'}=Astro.props;
+---
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={description}/><meta name="theme-color" content="#102a43"/><link rel="canonical" href={new URL(Astro.url.pathname,Astro.site)}/><title>{title} | van der Pol Group</title></head><body><Header/><main id="main"><slot/></main><Footer/></body></html>

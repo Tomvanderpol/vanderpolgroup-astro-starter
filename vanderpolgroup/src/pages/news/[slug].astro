@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';import {getCollection,render} from 'astro:content';export async function getStaticPaths(){const items=await getCollection('news');return items.map(item=>({params:{slug:item.id},props:{item}}));}const {item}=Astro.props;const {Content}=await render(item);
+---
+<BaseLayout title={item.data.title}><section class="pagehead"><div class="container"><div class="eyebrow">NEWS</div><h1>{item.data.title}</h1><p class="muted">{item.data.date.toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})}</p></div></section><section class="section"><article class="container content">{item.data.image&&<img src={item.data.image} alt="" style="border-radius:12px;margin-bottom:25px"/>}<Content/><p><a href="/news/">← All news</a></p></article></section></BaseLayout>
