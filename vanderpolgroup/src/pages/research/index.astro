@@ -1,4 +1,118 @@
+
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';import {getCollection} from 'astro:content';const items=(await getCollection('research')).sort((a,b)=>a.data.order-b.data.order);
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('research')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Match each research theme to its illustration
+const researchImages = {
+  'technique-development': '/images/technique-development.png',
+  'materials-mechanisms': '/images/materials-mechanisms.png',
+  'material-mechanisms': '/images/materials-mechanisms.png',
+  'photoneuromorphics': '/images/photoneuromorphics.png',
+};
+
+const getResearchImage = (item) => {
+  const slug = item.id.split('/').pop();
+
+  return researchImages[slug] || researchImages[
+    item.data.title
+      .toLowerCase()
+      .replace(/&/g, '')
+      .replace(/\s+/g, '-')
+  ];
+};
 ---
-<BaseLayout title="Research"><section class="pagehead"><div class="container"><div class="eyebrow">OUR SCIENCE</div><h1>Research</h1><p class="muted">Three connected directions in organic electronics and optoelectronic mixed conductors.</p></div></section><section class="section"><div class="container cards">{items.map(item=><a class="card" href={`/research/${item.id}/`}><h2>{item.data.title}</h2><p>{item.data.summary}</p><strong>Read more →</strong></a>)}</div></section></BaseLayout>
+
+<BaseLayout title="Research">
+  <section class="pagehead">
+    <div class="container">
+      <h1>Our Science</h1>
+      <p class="muted">
+        Three interconnected and complementary directions in optoelectronic mixed conductors and organic electronics.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cards">
+      {items.map((item) => (
+        <a
+          class="card research-card"
+          href={`/research/${item.id}/`}
+        >
+          {getResearchImage(item) && (
+            <div class="research-image">
+              <img
+                src={getResearchImage(item)}
+                alt={item.data.title}
+                loading="lazy"
+              />
+            </div>
+          )}
+
+          <div class="research-content">
+            <h2>{item.data.title}</h2>
+            <p>{item.data.summary}</p>
+            <strong>Read more →</strong>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .research-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    text-decoration: none;
+  }
+
+  .research-image {
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    background: #e6edf1;
+  }
+
+  .research-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .research-card:hover .research-image img {
+    transform: scale(1.04);
+  }
+
+  .research-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .research-content h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .research-content p {
+    margin: 0 0 1.5rem;
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .research-content strong {
+    color: #0696a6;
+    font-size: 0.95rem;
+  }
+</style>
