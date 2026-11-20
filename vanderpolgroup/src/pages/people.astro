@@ -1,4 +1,67 @@
+
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';import {getCollection,render} from 'astro:content';const people=(await getCollection('people')).sort((a,b)=>a.data.order-b.data.order);
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const people = (await getCollection('people')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
-<BaseLayout title="People"><section class="pagehead"><div class="container"><div class="eyebrow">THE TEAM</div><h1>People</h1><p class="muted">Meet the researchers behind the van der Pol Group.</p></div></section><section class="section"><div class="container">{people.length?<div class="cards">{await Promise.all(people.map(async p=>{const {Content}=await render(p);return <article class="card">{p.data.image&&<img src={p.data.image} alt={p.data.name} loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:16px"/>}<h2>{p.data.name}</h2><p><strong>{p.data.role}</strong></p><Content/>{p.data.email&&<p><a href={`mailto:${p.data.email}`}>{p.data.email}</a></p>}</article>}))}</div>:<p class="muted">Team profiles are being prepared. Add members through Pages CMS.</p>}</div></section></BaseLayout>
+
+<BaseLayout title="The Team">
+  <section class="pagehead">
+    <div class="container">
+      <h1>The Team</h1>
+      <p class="muted">
+        Meet the researchers behind the van der Pol Group.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {people.length ? (
+        <div class="cards">
+          {await Promise.all(
+            people.map(async (p) => {
+              const { Content } = await render(p);
+
+              return (
+                <article class="card">
+                  {p.data.image && (
+                    <img
+                      src={p.data.image}
+                      alt={p.data.name}
+                      loading="lazy"
+                      style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:16px"
+                    />
+                  )}
+
+                  <h2>{p.data.name}</h2>
+
+                  <p>
+                    <strong>{p.data.role}</strong>
+                  </p>
+
+                  <Content />
+
+                  {p.data.email && (
+                    <p>
+                      <a href={`mailto:${p.data.email}`}>
+                        {p.data.email}
+                      </a>
+                    </p>
+                  )}
+                </article>
+              );
+            })
+          )}
+        </div>
+      ) : (
+        <p class="muted">
+          Team profiles are being prepared. Add members through Pages CMS.
+        </p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
