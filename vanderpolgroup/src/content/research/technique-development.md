@@ -1,5 +1,5 @@
 ---
-title: Technique development
+title: Technique Development
 summary: Developing experimental techniques and methods to characterize
   photon-ion-electron coupling.
 order: 1
