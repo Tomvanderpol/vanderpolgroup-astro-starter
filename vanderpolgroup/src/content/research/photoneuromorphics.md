@@ -1,9 +1,9 @@
 ---
 title: Photoneuromorphics
-summary: Exploring light-responsive organic materials and devices with adaptive and neuromorphic functionality.
+summary: Exploring light-responsive (organic) mixed ionic-electronic conductors
+  for material level logics using light.
 order: 3
 ---
+We investigate opportunities at the intersection of photophysics, mixed conduction, and neuromorphic device concepts. 
 
-We investigate opportunities at the intersection of photophysics, mixed conduction, and neuromorphic device concepts.
-
-*This description is an initial draft. Replace it with your group's specific research goals in Pages CMS.*
+Control of the exact photoresponse allows to design new computational materials and concepts. 
