@@ -3,7 +3,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+// Current team members
 const people = (await getCollection('people')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Former group members
+const alumni = (await getCollection('alumni')).sort(
   (a, b) => a.data.order - b.data.order
 );
 ---
@@ -18,6 +24,7 @@ const people = (await getCollection('people')).sort(
     </div>
   </section>
 
+  <!-- Current team members -->
   <section class="section">
     <div class="container">
       {people.length ? (
@@ -54,9 +61,49 @@ const people = (await getCollection('people')).sort(
       )}
     </div>
   </section>
+
+  <!-- Alumni section -->
+  <section class="section alumni-section">
+    <div class="container">
+      <h2>Alumni</h2>
+      <p class="muted alumni-intro">
+        Former members of the van der Pol Group.
+      </p>
+
+      {alumni.length > 0 ? (
+        <div class="alumni-table-wrapper">
+          <table class="alumni-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Position in the group</th>
+                <th>Next position</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {alumni.map((person) => (
+                <tr>
+                  <td>{person.data.name}</td>
+                  <td>{person.data.position}</td>
+                  <td>{person.data.nextPosition}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p class="muted alumni-empty">
+          Alumni information will be added soon.
+        </p>
+      )}
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
+  /* Team member cards */
+
   .person-card {
     display: flex;
     flex-direction: column;
@@ -98,5 +145,62 @@ const people = (await getCollection('people')).sort(
 
   .person-card:hover .profile-link {
     text-decoration: underline;
+  }
+
+  /* Alumni section */
+
+  .alumni-section {
+    padding-top: 0;
+  }
+
+  .alumni-section h2 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .alumni-intro {
+    margin-bottom: 2rem;
+  }
+
+  .alumni-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .alumni-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .alumni-table th {
+    color: #0696a6;
+    font-weight: 600;
+    padding: 1rem;
+    border-bottom: 2px solid #dce5e9;
+  }
+
+  .alumni-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+
+  .alumni-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+
+  .alumni-empty {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 700px) {
+    .alumni-table {
+      min-width: 550px;
+    }
+
+    .alumni-section h2 {
+      font-size: 1.7rem;
+    }
   }
 </style>

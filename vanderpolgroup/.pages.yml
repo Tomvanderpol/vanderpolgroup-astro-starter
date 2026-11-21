@@ -1,6 +1,8 @@
+
 media:
   input: public/images
   output: /images
+
 content:
   - name: research
     label: Research themes
@@ -13,6 +15,7 @@ content:
       - { name: summary, label: Summary, type: text, required: true }
       - { name: order, label: Display order, type: number, required: true }
       - { name: body, label: Main text, type: rich-text }
+
   - name: people
     label: People
     type: collection
@@ -26,6 +29,19 @@ content:
       - { name: image, label: Photo, type: image }
       - { name: order, label: Display order, type: number }
       - { name: body, label: Biography, type: rich-text }
+
+  - name: alumni
+    label: Alumni
+    type: collection
+    path: src/content/alumni
+    view:
+      fields: [name, position, nextPosition, order]
+    fields:
+      - { name: name, label: Name, type: string, required: true }
+      - { name: position, label: Position in the group, type: string, required: true }
+      - { name: nextPosition, label: Next position, type: string, required: true }
+      - { name: order, label: Display order, type: number }
+
   - name: publications
     label: Publications
     type: collection
@@ -40,6 +56,7 @@ content:
       - { name: doi, label: DOI (without https://doi.org/), type: string }
       - { name: featured, label: Feature on homepage, type: boolean }
       - { name: body, label: Notes, type: rich-text }
+
   - name: news
     label: News
     type: collection
