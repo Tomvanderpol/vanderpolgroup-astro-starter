@@ -30,6 +30,18 @@ content:
       - { name: order, label: Display order, type: number }
       - { name: body, label: Biography, type: rich-text }
 
+  - name: alumni
+    label: Alumni
+    type: collection
+    path: vanderpolgroup/src/content/alumni
+    view:
+      fields: [name, position, nextPosition, order]
+    fields:
+      - { name: name, label: Name, type: string, required: true }
+      - { name: position, label: Position in the group, type: string, required: true }
+      - { name: nextPosition, label: Next position, type: string, required: true }
+      - { name: order, label: Display order, type: number }
+
   - name: publications
     label: Publications
     type: collection
